@@ -19,6 +19,7 @@ create table FloorType
 create table Resorces
 (
 	Re_id int primary key auto_increment,
+    #label varchar(20),
     Re_folderFile varchar(20) not null #class containing functions and objects and other ingame values.
 );
     
@@ -34,21 +35,14 @@ create table Flour#not global. worlds are based of increments of x(size of the w
     Fl_reference int REFERENCES Flour(Fl_id)
 );
 
-/*create table Item#global
+create table Item#global
 (
 	It_id int primary key auto_increment,
 	It_name varchar(40) not null,
     It_discription varchar(255) not null,
-    It_consumable tinyint not null #one use? (like a potion)
+    It_consumable tinyint not null, #one use? (like a potion)
+    It_effect int REFERENCES Resorces(Re_id)
 );
-create table ItemEffect#global
-(
-	IE_itemID int not null,
-    IE_stat varchar(20) not null,
-    IE_value int not null,
-    IE_duration int default null,
-    FOREIGN KEY (IE_itemID) REFERENCES Item(It_id)
-);*/
 create table Species#global
 (
 	Sp_name varchar(40) primary key,#name of race
@@ -80,6 +74,7 @@ create table Habit
 create table Unit#not global
 (
 	Un_species varchar(40) not null,
+    Un_sub int default null references Resorces(Re_id),
     Un_stats json not null,
     Un_location int not null,
     FOREIGN KEY (Un_species) REFERENCES Species(Sp_name),
